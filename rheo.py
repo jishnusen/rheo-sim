@@ -1,18 +1,22 @@
+from tkinter import filedialog
+import tkinter
+
+tkinter.Tk().withdraw()
+filename = filedialog.askopenfilename()
+
 import scipy.integrate as integrate
 import numpy as np
 import cmath
 import pandas as pd
 from lmfit import Model
 import sys
-from tkinter import filedialog
-import tkinter
 
-tkinter.Tk().withdraw()
-data = pd.read_csv(filedialog.askopenfilename())
+data = pd.read_csv(filename)
 
 
 def l_r(v, beta, f):
-    return (f * (8 - (4 * beta)) / 3) * cmath.exp(beta * v) * cmath.exp(-cmath.exp(v))
+    return (f * (8 - (4 * beta)) / 3) * cmath.exp(
+        beta * v) * cmath.exp(-cmath.exp(v))
 
 
 def integrand(x, omega, tau_c, beta, f):
@@ -35,6 +39,8 @@ def im_int(x, omega, tau_c, beta, f):
 
 #eta = float(input("Enter eta: "))
 kappa = 8.
+
+
 def function(x, G_inf, beta, f, eta):
     tau_m = eta / G_inf
     tau_c = kappa * tau_m
@@ -54,8 +60,8 @@ def function(x, G_inf, beta, f, eta):
 
 
 X = np.array(data.AF)
-YReal = np.array(data.SM/ 1e9)
-YImag = np.array(data.LM/1e9)
+YReal = np.array(data.SM / 1e9)
+YImag = np.array(data.LM / 1e9)
 Y = YReal + YImag * 1j
 
 from matplotlib import pyplot as plt
@@ -68,7 +74,7 @@ params['beta'].set(value=0.6, min=0.1, max=1)
 params['eta'].set(value=0.1, min=0, max=100)
 params['f'].set(value=0.5, min=0.1, max=2)
 print("Fitting...")
-result = model.fit(Y, x=X, params=params) 
+result = model.fit(Y, x=X, params=params)
 YFit = result.best_fit
 print("Complete!", result.best_values)
 plt.scatter(X, np.real(Y))
