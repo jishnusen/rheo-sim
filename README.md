@@ -44,4 +44,4 @@ python3 rheo.py outfile.csv
 ```
 The program will open a file chooser window when it is run. Here, choose a CSV
 with all the experimental data. It expects the CSV to have columns: AF, SM, and
-LM, for Angular Frequency (rad/s), Storage Modulus (GPa), and Loss Modulus (GPa), respectively.
+LM, for Angular Frequency (rad/s), Storage Modulus (Pa), and Loss Modulus (Pa), respectively.
